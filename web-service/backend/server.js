@@ -2,27 +2,32 @@ const express = require('express')
 const path = require('path')
 const dotenv = require('dotenv')
 dotenv.config()
-const bodyParser = require('body-parser')
+const cors = require('cors')
 const HTTP_PORT = process.env.PORT || 8080
+
+//import mongoDB connection
+const connectDB = require("./config/connectDB");
+connectDB();
 
 const app = express()
 
-// Middleware: Add support for incoming JSON entities
-app.use(bodyParser.json());
+// Middleware: CORS-enabled
+app.use(cors())
 
+// Middleware: Add support for incoming JSON entities
+app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
-// Deliver the app's home page to browser clients
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: "Welcome to the index page",
-        data: null
+        message: "API Listening"
     })
 });
 
 
 // Setup api routes
+app.use('/api/movies', require('./routes/movieRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 
 
@@ -33,7 +38,9 @@ app.use((req, res) => {
 
 
 
-
 app.listen(HTTP_PORT, () => {
     console.log('Server started on port ' + HTTP_PORT)
 })
+
+
+
