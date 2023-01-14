@@ -1,9 +1,8 @@
-//import Movie model
-const MovieModel = require('../models/movieModel')
 
-module.exports = class moviesDB {
-    constructor() {
-        this.Movie = MovieModel;
+module.exports = class MoviesDB {
+    constructor(movieModel) {
+        // We don't have a `Movie` object until initialize() is complete
+        this.Movie = movieModel;
     }
 
     // Pass the connection string to `initialize()`
@@ -49,7 +48,7 @@ module.exports = class moviesDB {
         return this.Movie.findOne({ _id: id }).exec();
     }
 
-    updateMovieById(data, id) {
+    updateMovieById(id, data) {
         return this.Movie.updateOne({ _id: id }, { $set: data }).exec();
     }
 

@@ -1,13 +1,11 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const path = require('path')
 const dotenv = require('dotenv')
 dotenv.config()
 const cors = require('cors')
 const HTTP_PORT = process.env.PORT || 8080
 
-//import mongoDB connection
-const connectDB = require("./config/connectDB");
-connectDB();
 
 const app = express()
 
@@ -37,10 +35,22 @@ app.use((req, res) => {
 })
 
 
+// MongoDB connection
+mongoose.set("strictQuery", false)
 
-app.listen(HTTP_PORT, () => {
-    console.log('Server started on port ' + HTTP_PORT)
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+    .then(() => {
+        console.log('---- MongoDB is Connected ----')
+        app.listen(HTTP_PORT, () => {
+            console.log('Server started on port ' + HTTP_PORT)
+        });
+    })
+    .catch(err => {
+        console.err('---- MongoDB Connection Failed ----' + err)
+    })
 
 
 
