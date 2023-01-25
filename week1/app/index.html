@@ -176,7 +176,6 @@
       //use custom code to fetch data from api and render data to html
 
       let data = null;
-      const modal = document.getElementById("modal-control");
 
       const handleClick = () => {
         fetch("https://jsonplaceholder.typicode.com/users")
@@ -213,7 +212,14 @@
         `;
 
         document.getElementById("modal-body-control").innerHTML = renderData;
-        modal.click();
+        
+        let myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+          backdrop: 'static', // default true - "static" indicates that clicking on the backdrop will not close the modal window
+          keyboard: false, // default true - false indicates that pressing on the "esc" key will not close the modal window
+          focus: true, // default true - this instructs the browser to place the modal window in focus when initialized
+        });
+
+        myModal.show();
       };
     </script>
   </body>
