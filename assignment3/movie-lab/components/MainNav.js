@@ -4,8 +4,24 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function MainNav() {
+
+    const router = useRouter()
+    const [formData, setFormData] = useState("")
+
+    const handleChange = (event) => {
+        setFormData(event.target.value)
+    }
+    const handleSubmit = (event) => {
+        const route = `/movies/${formData}`
+        event.preventDefault()
+        setFormData("")
+        router.push(route)
+    }
+
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
@@ -18,14 +34,16 @@ export default function MainNav() {
                             <Link href="/about" passHref legacyBehavior><Nav.Link>About</Nav.Link></Link>
                         </Nav>
 
-                        <Form className="d-flex">
+                        <Form className="d-flex" onSubmit={handleSubmit}>
                             <Form.Control
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Title (case sensitive)"
                                 className="me-2"
                                 aria-label="Search"
+                                onChange={handleChange}
+                                value={formData}
                             />
-                            <Button variant="outline-success">Search</Button>
+                            <Button variant="outline-success" type='submit'>Search</Button>
                         </Form>
                     </Navbar.Collapse>
                 </Container>

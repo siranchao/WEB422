@@ -1,0 +1,6 @@
+
+.learnMore {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 0;
+}

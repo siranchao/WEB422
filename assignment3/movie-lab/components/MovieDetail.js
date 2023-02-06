@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap"
-
+import Image from "next/image"
 
 export default function MovieDetail({ movie }) {
 
@@ -22,9 +22,7 @@ export default function MovieDetail({ movie }) {
                     <strong>IMDB Rating:</strong> {movie.imdb.rating} ({movie.imdb.votes} votes)
 
                 </Col>
-
             </Row>
-
         </Container>
     )
 }
