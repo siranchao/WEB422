@@ -15,21 +15,21 @@ export default function ArtworkCard({ objectID }) {
             data ?
                 <>
                     <Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={data.primaryImageSmall ? data.primaryImageSmall : "https://via.placeholder.com/375x375.png?text=[+Not+Available+]"} />
+                        <Link href={`/artwork/${objectID}`} passHref>
+                            <Card.Img variant="top" src={data.primaryImageSmall ? data.primaryImageSmall : "https://via.placeholder.com/375x375.png?text=[+Not+Available+]"} />
+                        </Link>
+
                         <Card.Body>
                             <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
                             <Card.Text>
-                                <strong>Date: </strong>{data.objectDate ? data.objectDate : "N/A"}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Classification: </strong>{data.classification ? data.classification : "N/A"}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Medium: </strong>{data.medium ? data.medium : "N/A"}
+                                <div><strong>Date: </strong>{data.objectDate ? data.objectDate : "N/A"}</div>
+                                <div><strong>Classification: </strong>{data.classification ? data.classification : "N/A"}</div>
+                                <div><strong>Medium: </strong>{data.medium ? data.medium : "N/A"}</div>
+
                             </Card.Text>
 
                             <Link href={`/artwork/${objectID}`} passHref>
-                                <Button variant="primary">
+                                <Button variant="outline-success">
                                     <strong>ID: </strong>{objectID}
                                 </Button>
                             </Link>
