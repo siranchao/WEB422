@@ -19,20 +19,20 @@ export default function ArtworkCard({ objectID }) {
 
                         <Card.Body>
                             <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
-                            <Card.Text>
+                            <section style={{ paddingBottom: "1.5rem" }}>
                                 <div><strong>Date: </strong>{data.objectDate ? data.objectDate : "N/A"}</div>
                                 <div><strong>Classification: </strong>{data.classification ? data.classification : "N/A"}</div>
                                 <div><strong>Medium: </strong>{data.medium ? data.medium : "N/A"}</div>
-                            </Card.Text>
+                            </section>
 
                             <br />
-                            <Card.Text>
+                            <section>
                                 <div><strong>Artist: </strong>{data.artistDisplayName ? data.artistDisplayName : "N/A"}
                                     {data.artistDisplayName && <span> (<a href={data.artistWikidata_URL} target="_blank" rel="noreferrer">wiki</a>)</span>}
                                 </div>
                                 <div><strong>Credit Line: </strong>{data.creditLine ? data.creditLine : "N/A"}</div>
                                 <div><strong>Dimensions: </strong>{data.dimensions ? data.dimensions : "N/A"}</div>
-                            </Card.Text>
+                            </section>
                             <br />
                             <Button variant="outline-secondary" onClick={() => router.back()} style={{ width: "80px" }}>
                                 Back

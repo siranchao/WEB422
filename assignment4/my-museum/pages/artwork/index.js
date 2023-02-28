@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from 'next/error'
-import { Row, Col, Pagination } from 'react-bootstrap'
+import { Row, Col, Pagination, Card } from 'react-bootstrap'
 import ArtworkCard from '@/components/ArtworkCard'
+import Link from 'next/link'
 
 const PER_PAGE = 12
 
@@ -42,7 +43,6 @@ export default function ArtworkList() {
         setPage(1)
     }, [data])
 
-
     return (
         <>
             <Head>
@@ -55,16 +55,27 @@ export default function ArtworkList() {
                 error ? <Error statusCode={404} /> :
                     artworkList ?
                         <>
-                            <Row>
+                            <Row className='gy-4'>
                                 {
                                     artworkList.length > 0 ?
                                         artworkList[page - 1].map((item) => (
-                                            <Col lg={3} md={6} sm={12} key={item}>
+                                            <Col lg={3} md={4} sm={6} xs={12} key={item}>
                                                 <ArtworkCard objectID={item} />
                                             </Col>
                                         ))
                                         :
-                                        <h4>Ops! Nothing Here</h4>
+                                        <Card style={{ width: "80%", margin: "2rem auto" }}>
+                                            <Card.Body>
+                                                <Card.Title>Ops! Nothing can be found</Card.Title>
+                                                <br />
+                                                <Card.Text>
+                                                    Sorry no results can be found based on your search. Please try entering for something else or check your keywords.
+                                                </Card.Text>
+
+                                                <Link href="/" passHref legacyBehavior><Card.Link>Back to Home</Card.Link></Link>
+                                                <Link href="/search" passHref legacyBehavior><Card.Link>Search Again</Card.Link></Link>
+                                            </Card.Body>
+                                        </Card>
                                 }
                             </Row>
 
