@@ -14,7 +14,7 @@ export default function Artwork() {
                 <title>Metropolitan Museum of Art | Artwork</title>
                 <meta name="description" content="Metropolitan Museum of Art | Artwork" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/museum.ico" />
             </Head>
             {
                 objectID ?

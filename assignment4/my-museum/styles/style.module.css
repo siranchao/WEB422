@@ -3,3 +3,22 @@
     padding: 0.4rem;
     font-size: 14px;
 }
+
+.text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+
+.link {
+    color: forestgreen;
+    font-size: 14px;
+    font-weight: 500;
+    overflow-wrap:break-word;
+}
+
+.mainNav{
+    background-color: #003366;
+    height: 8vh;
+}

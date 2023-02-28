@@ -11,7 +11,7 @@ const PER_PAGE = 12
 
 
 export default function ArtworkList() {
-    const [artworkList, setArtworkList] = useState([])
+    const [artworkList, setArtworkList] = useState()
     const [page, setPage] = useState(1)
 
     const router = useRouter()
@@ -49,7 +49,7 @@ export default function ArtworkList() {
                 <title>Metropolitan Museum of Art | Artworks</title>
                 <meta name="description" content="Metropolitan Museum of Art | Artworks" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/museum.ico" />
             </Head>
             {
                 error ? <Error statusCode={404} /> :

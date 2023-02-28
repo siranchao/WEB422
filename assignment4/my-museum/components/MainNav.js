@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import styles from "@/styles/style.module.css"
 
 export default function MainNav() {
 
@@ -24,7 +25,7 @@ export default function MainNav() {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+            <Navbar variant="dark" expand="lg" fixed="top" className={styles.mainNav}>
                 <Container>
                     <Navbar.Brand>Siran Cao</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
