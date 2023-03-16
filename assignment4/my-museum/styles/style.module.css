@@ -18,7 +18,17 @@
     overflow-wrap:break-word;
 }
 
-.mainNav{
-    background-color: #003366;
-    height: 8vh;
+.textArea{
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    padding-top: 0.5rem;
+    padding-bottom: 1.5rem;
+    overflow-wrap: break-word;
 }
+
+.highlightText {
+    font-size: 15px;
+    font-weight: 600;
+}
+

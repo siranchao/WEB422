@@ -3,6 +3,7 @@ import Error from 'next/error'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
+import styles from '@/styles/style.module.css'
 
 export default function ArtworkCard({ objectID }) {
 
@@ -21,10 +22,10 @@ export default function ArtworkCard({ objectID }) {
 
                         <Card.Body>
                             <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
-                            <section style={{ paddingBottom: "1.5rem" }}>
-                                <div><strong>Date: </strong>{data.objectDate ? data.objectDate : "N/A"}</div>
-                                <div><strong>Classification: </strong>{data.classification ? data.classification : "N/A"}</div>
-                                <div><strong>Medium: </strong>{data.medium ? data.medium : "N/A"}</div>
+                            <section className={styles.textArea}>
+                                <div><span className={styles.highlightText}>Date: </span>{data.objectDate ? data.objectDate : "N/A"}</div>
+                                <div><span className={styles.highlightText}>Classification: </span>{data.classification ? data.classification : "N/A"}</div>
+                                <div><span className={styles.highlightText}>Medium: </span>{data.medium ? data.medium : "N/A"}</div>
 
                             </section>
 

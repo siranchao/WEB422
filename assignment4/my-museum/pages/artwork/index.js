@@ -6,6 +6,7 @@ import Error from 'next/error'
 import { Row, Col, Pagination, Card } from 'react-bootstrap'
 import ArtworkCard from '@/components/ArtworkCard'
 import Link from 'next/link'
+import validData from '@/public/data/validObjectIDList.json'
 
 const PER_PAGE = 12
 
@@ -33,9 +34,15 @@ export default function ArtworkList() {
 
     useEffect(() => {
         if (data) {
+            //only filter valid items from json data
+            const filteredData = validData.objectIDs.filter((item) => {
+                return data.objectIDs?.includes(item)
+            })
+
+            //calculate items for each page
             const results = []
-            for (let i = 0; i < data?.objectIDs?.length; i += PER_PAGE) {
-                const chunk = data?.objectIDs.slice(i, i + PER_PAGE);
+            for (let i = 0; i < filteredData.length; i += PER_PAGE) {
+                const chunk = filteredData.slice(i, i + PER_PAGE);
                 results.push(chunk);
             }
             setArtworkList(results)

@@ -6,16 +6,17 @@ import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from "@/styles/style.module.css"
 
 export default function MainNav() {
 
     const router = useRouter()
     const [formData, setFormData] = useState("")
+    const [isExpanded, setIsExpanded] = useState(false)
 
     const handleChange = (e) => {
         setFormData(e.target.value)
     }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const route = `/artwork?title=true&q=${formData} `
@@ -23,18 +24,23 @@ export default function MainNav() {
         router.push(route)
     }
 
+    const collapseNav = () => {
+        setIsExpanded(false)
+    }
+
     return (
         <>
-            <Navbar variant="dark" expand="lg" fixed="top" className={styles.mainNav}>
+            <Navbar variant="dark" expand="lg" fixed="top" bg="primary" expanded={isExpanded}>
                 <Container>
-                    <Navbar.Brand>Siran Cao</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Brand><Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Siran Cao</Nav.Link></Link></Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setIsExpanded(!isExpanded)} />
                     <Navbar.Collapse id="responsive-navbar-nav">
+                        &nbsp;
                         <Nav className="me-auto">
-                            <Link href="/" passHref legacyBehavior><Nav.Link>Home</Nav.Link></Link>
-                            <Link href="/search" passHref legacyBehavior><Nav.Link>Advanced Search</Nav.Link></Link>
+                            <Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Home</Nav.Link></Link>
+                            <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Advanced Search</Nav.Link></Link>
                         </Nav>
-
+                        &nbsp;
                         <Form className="d-flex" onSubmit={handleSubmit}>
                             <Form.Control
                                 type="search"
@@ -44,8 +50,9 @@ export default function MainNav() {
                                 onChange={handleChange}
                                 value={formData}
                             />
-                            <Button variant="outline-success" type='submit'>Search</Button>
+                            <Button variant="outline-success" type='submit' onClick={collapseNav}>Search</Button>
                         </Form>
+                        &nbsp;
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
