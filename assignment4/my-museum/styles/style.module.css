@@ -32,3 +32,7 @@
     font-weight: 600;
 }
 
+.detailPageBtnGroup{
+    display: flex;
+    justify-content: space-between;
+}

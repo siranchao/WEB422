@@ -5,8 +5,8 @@ import useSWR from 'swr'
 import Error from 'next/error'
 import { Row, Col, Pagination, Card } from 'react-bootstrap'
 import ArtworkCard from '@/components/ArtworkCard'
-import Link from 'next/link'
 import validData from '@/public/data/validObjectIDList.json'
+import CustomCard from '@/components/CustomCard'
 
 const PER_PAGE = 12
 
@@ -71,18 +71,8 @@ export default function ArtworkList() {
                                             </Col>
                                         ))
                                         :
-                                        <Card style={{ width: "80%", margin: "2rem auto" }}>
-                                            <Card.Body>
-                                                <Card.Title>Ops! Nothing can be found</Card.Title>
-                                                <br />
-                                                <Card.Text>
-                                                    Sorry no results can be found based on your search. Please try entering for something else or check your keywords.
-                                                </Card.Text>
+                                        <CustomCard title={"Ops! Nothing can be found"} text={"Sorry no results can be found based on your search. Please try entering for something else or check your keywords."} />
 
-                                                <Link href="/" passHref legacyBehavior><Card.Link>Back to Home</Card.Link></Link>
-                                                <Link href="/search" passHref legacyBehavior><Card.Link>Search Again</Card.Link></Link>
-                                            </Card.Body>
-                                        </Card>
                                 }
                             </Row>
 

@@ -4,10 +4,27 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/router';
 import styles from '@/styles/style.module.css'
+import { useAtom } from 'jotai';
+import { favoritesAtom } from '@/store';
+import { useState } from 'react';
 
-export default function ArtworkCard({ objectID }) {
+export default function ArtworkCardDetail({ objectID }) {
+    const [favorites, setFavorites] = useAtom(favoritesAtom)
+
+    const [added, setAdded] = useState(favorites.includes(objectID))
+
+    const favoritesClicked = () => {
+        if (added) {
+            setFavorites(favorites.filter(obj => obj !== objectID))
+        }
+        else {
+            setFavorites([...favorites, objectID])
+        }
+        setAdded(!added)
+    }
+
     const router = useRouter()
-    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
+    const { data, error } = useSWR(objectID ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}` : null)
 
     return (
         error ?
@@ -35,9 +52,16 @@ export default function ArtworkCard({ objectID }) {
                                 <div><span className={styles.highlightText}>Dimensions: </span>{data.dimensions ? data.dimensions : "N/A"}</div>
                             </section>
                             <br />
-                            <Button variant="outline-secondary" onClick={() => router.back()} style={{ width: "80px" }}>
-                                Back
-                            </Button>
+                            <section className={styles.detailPageBtnGroup}>
+                                <Button variant={added ? "secondary" : "info"} onClick={favoritesClicked} style={{ minWidth: "10rem", maxWidth: "14rem" }}>
+                                    {added ? "Remove from Favorites" : "Add to Favorites"}
+                                </Button>
+
+                                <Button variant="outline-secondary" onClick={() => router.back()} style={{ width: "80px" }}>
+                                    Back
+                                </Button>
+                            </section>
+
                         </Card.Body>
                     </Card>
                 </>
