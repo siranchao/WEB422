@@ -6,6 +6,7 @@ import Link from 'next/link';
 import styles from '@/styles/style.module.css'
 
 export default function ArtworkCard({ objectID }) {
+    const maxLength = 50;
 
     const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
 
@@ -21,7 +22,11 @@ export default function ArtworkCard({ objectID }) {
                         </Link>
 
                         <Card.Body>
-                            <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
+                            <Card.Title>{data.title ?
+                                data.title.length > maxLength ? data.title.slice(0, maxLength) + "..." : data.title
+                                :
+                                "N/A"}
+                            </Card.Title>
                             <section className={styles.textArea}>
                                 <div><span className={styles.highlightText}>Date: </span>{data.objectDate ? data.objectDate : "N/A"}</div>
                                 <div><span className={styles.highlightText}>Classification: </span>{data.classification ? data.classification : "N/A"}</div>

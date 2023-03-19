@@ -7,8 +7,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useAtom } from 'jotai';
+import { searchHistoryAtom } from '@/store';
+
 
 export default function MainNav() {
+    //global state
+    const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
 
     const router = useRouter()
     const [formData, setFormData] = useState("")
@@ -22,6 +27,8 @@ export default function MainNav() {
         e.preventDefault()
         const route = `/artwork?title=true&q=${formData} `
         setFormData("")
+        //add to search history
+        setSearchHistory([...searchHistory, route])
         router.push(route)
     }
 
@@ -38,8 +45,8 @@ export default function MainNav() {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         &nbsp;
                         <Nav className="me-auto">
-                            <Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Home</Nav.Link></Link>
-                            <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Advanced Search</Nav.Link></Link>
+                            <Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/"}>Home</Nav.Link></Link>
+                            <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/search"} >Advanced Search</Nav.Link></Link>
                         </Nav>
                         &nbsp;
                         <Form className="d-flex" onSubmit={handleSubmit}>
@@ -56,7 +63,8 @@ export default function MainNav() {
                         &nbsp;
                         <Nav>
                             <NavDropdown title="User Name" id="basic-nav-dropdown">
-                                <Link href="/favorites" passHref legacyBehavior><NavDropdown.Item onClick={collapseNav}>Favorites</NavDropdown.Item></Link>
+                                <Link href="/favorites" passHref legacyBehavior><NavDropdown.Item onClick={collapseNav} active={router.pathname === "/favorites"} >Favorites</NavDropdown.Item></Link>
+                                <Link href="/history" passHref legacyBehavior><NavDropdown.Item onClick={collapseNav} active={router.pathname === "/history"} >Search History</NavDropdown.Item></Link>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>

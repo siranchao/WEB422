@@ -3,8 +3,13 @@ import { Form, Row, Col, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import styles from "@/styles/style.module.css"
+import { useAtom } from 'jotai'
+import { searchHistoryAtom } from '@/store'
 
 export default function AdvancedSearch() {
+    //searchHistoryAtom
+    const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
+
     const router = useRouter()
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,10 +31,12 @@ export default function AdvancedSearch() {
         query += `&isOnView=${data?.isOnView}`
         query += `&isHighlight=${data?.isHighlight}`
         query += `&q=${data?.query}`
+        //add to search history
+        setSearchHistory([...searchHistory, query])
+
+        //redirect to search page
         router.push(query)
     }
-
-
 
     return (
         <>
