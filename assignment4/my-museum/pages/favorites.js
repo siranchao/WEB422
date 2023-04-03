@@ -9,6 +9,10 @@ import ArtworkCard from '@/components/ArtworkCard'
 export default function Favorites() {
     const [favorites, setFavorites] = useAtom(favoritesAtom)
 
+    if (!favorites) {
+        return null;
+    }
+
     return (
         <>
             <Head>

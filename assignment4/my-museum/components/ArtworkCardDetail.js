@@ -6,24 +6,30 @@ import { useRouter } from 'next/router';
 import styles from '@/styles/style.module.css'
 import { useAtom } from 'jotai';
 import { favoritesAtom } from '@/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { addToFavorites, removeFromFavorites } from '@/lib/userData';
 
 export default function ArtworkCardDetail({ objectID }) {
+    const router = useRouter()
+
     const [favorites, setFavorites] = useAtom(favoritesAtom)
+    const [added, setAdded] = useState(false)
 
-    const [added, setAdded] = useState(favorites.includes(objectID))
-
-    const favoritesClicked = () => {
+    const favoritesClicked = async () => {
         if (added) {
-            setFavorites(favorites.filter(obj => obj !== objectID))
+            setFavorites(await removeFromFavorites(objectID))
         }
         else {
-            setFavorites([...favorites, objectID])
+            setFavorites(await addToFavorites(objectID))
         }
-        setAdded(!added)
     }
 
-    const router = useRouter()
+    useEffect(() => {
+        setAdded(favorites?.includes(objectID))
+    }, [favorites])
+
+
+
     const { data, error } = useSWR(objectID ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}` : null)
 
     return (

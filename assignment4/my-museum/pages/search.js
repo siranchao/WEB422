@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import styles from "@/styles/style.module.css"
 import { useAtom } from 'jotai'
 import { searchHistoryAtom } from '@/store'
+import { addToHistory } from '@/lib/userData'
 
 export default function AdvancedSearch() {
     //searchHistoryAtom
@@ -23,8 +24,8 @@ export default function AdvancedSearch() {
         }
     })
 
-    const submitForm = (data) => {
-        let query = "/artwork?"
+    const submitForm = async (data) => {
+        let query = ""
         query += `${data?.searchBy}=true`
         query += data.geoLocation ? `&geoLocation=${data.geoLocation}` : ""
         query += data.medium ? `&medium=${data.medium}` : ""
@@ -32,10 +33,10 @@ export default function AdvancedSearch() {
         query += `&isHighlight=${data?.isHighlight}`
         query += `&q=${data?.query}`
         //add to search history
-        setSearchHistory([...searchHistory, query])
+        setSearchHistory(await addToHistory(query))
 
         //redirect to search page
-        router.push(query)
+        router.push("/artwork?" + query)
     }
 
     return (

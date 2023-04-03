@@ -5,10 +5,16 @@ import { useRouter } from 'next/router'
 import CustomCard from '@/components/CustomCard'
 import styles from '@/styles/style.module.css'
 import { Button, ListGroup } from 'react-bootstrap'
+import { removeFromHistory } from '@/lib/userData'
 
 export default function History() {
     const router = useRouter()
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
+
+    if (!searchHistory) {
+        return null;
+    }
+
 
     let parsedHistory = searchHistory.map((item) => {
         let params = new URLSearchParams(item)
@@ -20,9 +26,9 @@ export default function History() {
         router.push(searchHistory[index])
     }
 
-    const removeHistoryClicked = (e, index) => {
+    const removeHistoryClicked = async (e, index) => {
         e.stopPropagation()
-        setSearchHistory(searchHistory.filter((item, i) => i !== index))
+        setSearchHistory(await removeFromHistory(searchHistory[index]))
     }
 
     return (
@@ -42,7 +48,7 @@ export default function History() {
                                     <div>
                                         <div style={{ fontWeight: 600 }}>Keyword: {item.q}</div>
                                         <div style={{ fontWeight: 300 }}>
-                                            <span>Search By: {Object.keys(item)[0].split("?")[1]}&nbsp;&nbsp;&nbsp;</span>
+                                            <span>Search By: {Object.keys(item)[0].split("=")[0]}&nbsp;&nbsp;&nbsp;</span>
                                             {Object.keys(item).map((key, index) => (
                                                 (index !== 0 && index !== Object.keys(item).length - 1) &&
                                                 <span key={index}>{key}: {item[key]}&nbsp;&nbsp;&nbsp;</span>
@@ -65,12 +71,3 @@ export default function History() {
     )
 }
 
-///
-// const History = () => {
-//     artwork?title: true,
-//     geoLocation: Europe,
-//     medium: Ceramics,
-//     isOnView: true,
-//     isHighlight: true,
-//     q: land
-// }
